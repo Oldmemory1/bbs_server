@@ -65,7 +65,7 @@ public class ConcernedService {
 
             final var newTargetFans = new ArrayList<String>();
             for (var myId: targetfans) {
-                if (!myId.equals(targetfans)) {
+                if (!myId.equals(targetfans.toString())) {
                     newMyconcerned.add(myId);
                 }
             }                                                     //把不是我username重新复制一份进行更新
