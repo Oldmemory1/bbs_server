@@ -34,7 +34,7 @@ public class ReviewService {
         }
         final var images = Utility.saveReviewImages(reviewRequest.getImages(), reviewRequest.getId());
         reviewMapper.add(new ReviewData(reviewRequest.getId(), reviewRequest.getTargetPost(), Utility.getDate(Const.DATE_FORMAT), reviewRequest.getUsername(), reviewRequest.getContent(), Utility.toJson(images), 0));
-        final var previousPost = postMapper.query(new PostData(reviewRequest.getTargetPost(), null, null, null, null, null, null, null));
+        final var previousPost = postMapper.query(new PostData(reviewRequest.getTargetPost(), null, null, null, null, null, null, null,null));
         //更新针对该post的评论
         final List<String> reviewsLst = Utility.fromJson(previousPost.getReviews(), List.class);
         reviewsLst.add(reviewRequest.getId());
