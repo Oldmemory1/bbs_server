@@ -56,7 +56,7 @@ public class UserService {
         );
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
         LocalDateTime now = LocalDateTime.now();
-        userDetailsMapper.addUserDetails(new UserDetails(user.getUsername(),"","",dtf.format(now)));
+        userDetailsMapper.addUserDetails(new UserDetails(user.getUsername(),"","",dtf.format(now),""));
         return new UserResponse(true, null, user);
     }
 

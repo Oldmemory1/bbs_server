@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 @Service
 public class ReviewService {
@@ -26,8 +27,10 @@ public class ReviewService {
 
     public ReviewResponse add(ReviewRequest reviewRequest) throws IOException {
         final var reviewToQuery = new ReviewData(reviewRequest.getId(), null, null, null, null,null, null);
-        if (reviewMapper.query(reviewToQuery) != null) {
-            return new ReviewResponse(false, ReviewResponseFailedReason.REVIEW_ALREADY_EXISTS, null);
+        while (reviewMapper.query(reviewToQuery) != null) {
+            Random rand = new Random(System.currentTimeMillis());
+             reviewRequest.setId(String.valueOf(rand.nextInt()));
+            //return new ReviewResponse(false, ReviewResponseFailedReason.REVIEW_ALREADY_EXISTS, null);
         }
         final var images = Utility.saveReviewImages(reviewRequest.getImages(), reviewRequest.getId());
         reviewMapper.add(new ReviewData(reviewRequest.getId(), reviewRequest.getTargetPost(), Utility.getDate(Const.DATE_FORMAT), reviewRequest.getUsername(), reviewRequest.getContent(), Utility.toJson(images), 0));
