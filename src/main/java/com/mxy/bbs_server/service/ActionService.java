@@ -70,7 +70,7 @@ public class ActionService {
     }
 
     private ActionResponse likePost(String postId) {
-        final var previousPost = postMapper.query(new PostData(postId, null, null, null, null, null, null, null));
+        final var previousPost = postMapper.query(new PostData(postId, null, null, null, null, null, null, null,null));
         previousPost.setLikeNum(previousPost.getLikeNum() + 1);
         postMapper.update(previousPost);
         return new ActionResponse(true);

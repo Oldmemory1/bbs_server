@@ -21,5 +21,5 @@ public interface UserInfoMapper {
     UserInfoData query(UserInfoData userInfo);
 
     @Select("select * from UserInfo where username = #{username}")
-    UserInfo query(User user);
+    UserInfo queryByUser(User user);
 }

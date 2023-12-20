@@ -70,7 +70,7 @@ public class UserInfoService {
             //密码不符
             return new UserInfoResponse(false, UserInfoResponseFailedReason.WRONG_PASSWORD, null);
         }
-        return new UserInfoResponse(true, null, userInfoMapper.query(user));
+        return new UserInfoResponse(true, null, userInfoMapper.queryByUser(user));
     }
 
     public LikeOrNotResponse postQuery(LikeOrNotRequest lOn) {

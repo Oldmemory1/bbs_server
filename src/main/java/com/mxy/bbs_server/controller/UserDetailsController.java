@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/UserDetails")
 public class UserDetailsController {
     private UserDetailsService userDetailsService;
+    @PostMapping("/update")
     public UserDetailsResponse update(UserDetailsRequest request){
         return userDetailsService.update(request);
     }

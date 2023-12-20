@@ -1,6 +1,7 @@
 package com.mxy.bbs_server.mapper;
 
 import com.mxy.bbs_server.entity.PostData;
+import com.mxy.bbs_server.entity.PostType;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -23,4 +24,7 @@ public interface PostMapper  {
 
     @Update("update Post set date = #{date}, owner = #{owner}, title = #{title}, content = #{content}, images = #{images}, likeNum = #{likeNum}, reviews = #{reviews},PostType=#{PostType} where id = #{id}")
     void update(PostData post);
+
+    @Select("select * from Post where Post.PostType=#{PostType};")
+    List<PostData> queryByPostType(PostType type);
 }
