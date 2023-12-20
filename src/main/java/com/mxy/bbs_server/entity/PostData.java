@@ -16,4 +16,5 @@ public class PostData {
     private String images;
     private Integer likeNum;
     private String reviews;
+    private PostType type;
 }

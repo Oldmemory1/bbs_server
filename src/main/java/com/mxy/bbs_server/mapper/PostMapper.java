@@ -12,7 +12,7 @@ import java.util.List;
 @Mapper
 public interface PostMapper  {
 
-    @Insert("insert into Post (id, date, owner, title, content, images, likeNum, reviews) values (#{id}, #{date}, #{owner}, #{title}, #{content}, #{images}, #{likeNum}, #{reviews})")
+    @Insert("insert into Post (id, date, owner, title, content, images, likeNum, reviews,PostType) values (#{id}, #{date}, #{owner}, #{title}, #{content}, #{images}, #{likeNum}, #{reviews},#{PostType})")
     void add(PostData post);
 
     @Select("select * from Post where id = #{id}")
@@ -21,6 +21,6 @@ public interface PostMapper  {
     @Select("select id from Post")
     List<String> selectAll();
 
-    @Update("update Post set date = #{date}, owner = #{owner}, title = #{title}, content = #{content}, images = #{images}, likeNum = #{likeNum}, reviews = #{reviews} where id = #{id}")
+    @Update("update Post set date = #{date}, owner = #{owner}, title = #{title}, content = #{content}, images = #{images}, likeNum = #{likeNum}, reviews = #{reviews},PostType=#{PostType} where id = #{id}")
     void update(PostData post);
 }

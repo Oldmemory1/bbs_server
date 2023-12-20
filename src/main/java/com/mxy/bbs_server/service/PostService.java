@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 @Service
 public class PostService {
@@ -25,8 +26,10 @@ public class PostService {
     }
 
     public PostResponse add(PostRequest postRequest) throws IOException {
-        if (postMapper.query(new PostData(postRequest.getId(), null, null, null, null, null, null, null)) != null) {
-            return new PostResponse(false, PostResponseFailedReason.POST_ALREADY_EXISTS, null);
+        while (postMapper.query(new PostData(postRequest.getId(), null, null, null, null, null, null, null,null)) != null) {
+            //return new PostResponse(false, PostResponseFailedReason.POST_ALREADY_EXISTS, null);
+            Random random=new Random(System.currentTimeMillis());
+            postRequest.setId(String.valueOf(random.nextInt()));
         }
         final var images = Utility.savePostImages(postRequest.getImages(), postRequest.getId());
         postMapper.add(new PostData(postRequest.getId(),
@@ -36,7 +39,10 @@ public class PostService {
                 postRequest.getContent(),
                 Utility.toJson(images),
                 0,
-                Utility.toJson(new ArrayList<String>()))
+                Utility.toJson(new ArrayList<String>()),
+                postRequest.getType()
+
+                )
         );
         final var previousUserInfo = userInfoMapper.query(new UserInfoData(postRequest.getOwner(), null, null, null, null, null));
         //在"我的帖子"中添加当前帖子
@@ -44,7 +50,7 @@ public class PostService {
         myPosts.add(postRequest.getId());
         previousUserInfo.setMyPosts(Utility.toJson(myPosts));
         userInfoMapper.update(previousUserInfo);
-        final var postRes = postMapper.query(new PostData(postRequest.getId(), null, null, null, null, null, null, null));
+        final var postRes = postMapper.query(new PostData(postRequest.getId(), null, null, null, null, null, null, null,null));
         return new PostResponse(true, null, new Post(postRes.getId(),
                 postRes.getDate(),
                 postRes.getOwner(),
@@ -52,12 +58,13 @@ public class PostService {
                 postRes.getContent(),
                 Utility.fromJson(postRes.getImages(), ArrayList.class),
                 postRes.getLikeNum(), Utility.fromJson(postRes.getReviews(),
-                ArrayList.class)
+                ArrayList.class
+        ), postRes.getType()
         ));
     }
 
     public PostResponse query(PostRequest postRequest) {
-        var postRes = postMapper.query(new PostData(postRequest.getId(), null, null, null, null, null, null, null));
+        var postRes = postMapper.query(new PostData(postRequest.getId(), null, null, null, null, null, null, null,null));
         if (postRes == null) {
             return new PostResponse(false, PostResponseFailedReason.POST_DOES_NOT_EXIST, null);
         }
@@ -69,7 +76,8 @@ public class PostService {
                         postRes.getContent(),
                         Utility.fromJson(postRes.getImages(), ArrayList.class),
                         postRes.getLikeNum(), Utility.fromJson(postRes.getReviews(),
-                        ArrayList.class)
+                        ArrayList.class),
+                        postRes.getType()
                 )
         );
     }

@@ -1,6 +1,7 @@
 package com.mxy.bbs_server.controller;
 
 import com.mxy.bbs_server.entity.PostRequest;
+import com.mxy.bbs_server.entity.PostType;
 import com.mxy.bbs_server.response.post.PostResponse;
 import com.mxy.bbs_server.service.PostService;
 import org.springframework.web.bind.annotation.*;
@@ -24,8 +25,8 @@ public class PostController {
     }
 
     @PostMapping("/addWithoutImage")
-    public PostResponse add(String id, String owner, String title, String content) throws IOException {
-        return postService.add(new PostRequest(id, owner, title, content, new MultipartFile[0]));
+    public PostResponse add(String id, String owner, String title, String content, PostType type) throws IOException {
+        return postService.add(new PostRequest(id, owner, title, content, new MultipartFile[0],type));
     }
 
     @PostMapping("/query")
@@ -35,6 +36,6 @@ public class PostController {
 
     @GetMapping("/query/{postId}")
     public PostResponse query(@PathVariable("postId") String postId) {
-        return postService.query(new PostRequest(postId, "", "", "", null));
+        return postService.query(new PostRequest(postId, "", "", "", null,null));
     }
 }

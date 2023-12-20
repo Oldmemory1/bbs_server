@@ -27,7 +27,7 @@ public class ConcernedService {
         );
         final var targetfriendship = friendMapper.query(                         //得到关注对象的好友关系
                 new FriendshipData(targetConcerned, "","",null,null)
-        );
+        );//被关注的人的粉丝列表
         final ArrayList<String> myconcerned = Utility.fromJson(friendship.getMyConcerned(), ArrayList.class);//自己的关注列表
         final ArrayList<String> targetfans = Utility.fromJson(targetfriendship.getMyFans(), ArrayList.class);    //关注对象的粉丝列表
         if (!isCancel) { //实现关注

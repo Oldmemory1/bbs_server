@@ -17,4 +17,5 @@ public class Post {
     private List<String> images;
     private Integer likeNum;
     private List<String> reviews;
+    private PostType type;
 }
